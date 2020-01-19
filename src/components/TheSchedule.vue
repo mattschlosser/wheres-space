@@ -24,7 +24,7 @@
           <label for='building'>Building: </label>
           <select placeholder='Building' class='form-control' v-model='edit.building'>
               <option value="">All</option>
-              <option id='building' :key="building.id" v-for="building in buildlings" :value="building.id">
+              <option id='building' :key="building.id" v-for="building in buildings" :value="building.id">
                 {{building.name}}
               </option>
           </select>
@@ -59,38 +59,37 @@ export default {
     }
   },
   async created() {
+    let that = this;
     this.rooms = await fetch('/db.txt').then(f => f.text()).then(r => {
       let times = r.split('\n');
       console.log(times.length);
       let x = times.reduce((A,e) => {
-        // let A = a;
-        // console.log(i); 
         let days_of_week = e.match(/^([MTWRF])+\s/) || [];
         let classroom = e.match(/\(([A-Za-z0-9\s]+)\)\s*?$/);
-        let times = e.matchAll(/(\d{2,}:\d{2,}):\d{2}/g)
+        let times = e.matchAll(/(\d{2,}:\d{2,}):\d{2}/g);
+        let building = classroom[1].match(/^([A-Za-z]+)/)[1];
         classroom = classroom[1];
-        // fetch(classroom);
-        if (!A[classroom]) {
-          A[classroom] = {
+        if (!A.buildings[building]) {
+          A.buildings[building] = building;
+        }
+        if (!A.rooms[classroom]) {
+          A.rooms[classroom] = {
             name: classroom,
             hours: []
           }
         }
-        A[classroom].hours.push(
+        A.rooms[classroom].hours.push(
           {
             dow: days_of_week[1],
             start: times.next().value[1],
             end: times.next().value[1],
           }
         )
-        // fetch(A[classroom].name)
-        // console.log(i);
-        // console.log(A);
         return A;
-      },{})
-
-      // console.log(x);
-      return Object.keys(x).map(e => x[e]).sort((a,b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
+      },{rooms: {}, buildings: {}})
+      let buildings = Object.keys(x.buildings).map(e => ({name: e, id: e})).sort((a,b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
+      that.buildings = buildings;
+      return Object.keys(x.rooms).map(e => x.rooms[e]).sort((a,b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
     });
   },
   data: () => ({
@@ -100,13 +99,7 @@ export default {
 
     }, 
     rooms: [],
-    buildlings: [
-      {id: 'CCIS', name: "CCIS"},
-      {id: 'CSC', name: "CSC"},
-      {id: 'NREF', name: "NREF"},
-      {id: 'ETLC', name: "ETLC"},
-      {id: 'CAB', name: "CAB"}
-    ]
+    buildings: []
   }),
   methods: {
     doSomething() {
