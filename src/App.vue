@@ -7,7 +7,7 @@
       <div class='navbar-brand text-white ml-3'>Wheres Space</div>
     </div>
     <div class='jumbotron'>
-      <p>Where's Space helps you find a quiet place at your university</p>
+      <p>Where's Space? helps you find a quiet place at your university</p>
     </div>
     <TheSchedule></TheSchedule>
   </div>
