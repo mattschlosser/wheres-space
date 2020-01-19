@@ -4,24 +4,26 @@
     <form @submit="doSomething">
       <div class='form-row'>
         <div class='col-md-4 p-2'>
-          <label for='uni'>University</label>
+          <label for='uni' class='font-weight-bold'>University:</label>
           <select placeholder='University' class='form-control' id='uni' v-model='edit.university'>
             <option value="" selected>University of Alberta</option>
           </select>
         </div>
         <div class='col-md-4 p-2'>
-          <label for='weekday'>Weekday: </label>
+          <label for='weekday' class='font-weight-bold'>Weekday: </label>
           <select class='form-control' id='weekday' v-model='edit.weekday'>
             <option value="" selected>Day of the week</option>
+            <option value='U'>Sunday</option>
             <option value='M'>Monday</option>
             <option value='T'>Tuesday</option>
             <option value='W'>Wednesday</option>
             <option value='R'>Thursday</option>
             <option value='F'>Friday</option>
+            <option value='S'>Saturday</option>
           </select>
         </div>
         <div class='col-md-4 p-2'>
-          <label for='building'>Building: </label>
+          <label for='building' class='font-weight-bold'>Building: </label>
           <select placeholder='Building' class='form-control' v-model='edit.building'>
               <option value="">All</option>
               <option id='building' :key="building.id" v-for="building in buildings" :value="building.id">
@@ -32,8 +34,20 @@
       </div>
     </form>
     </div>
+    <div class='col-12 row mt-4'>
+      <div class='col-md-4'><b>Legend:</b></div>
+      <div class='col-md-4'>
+        <span style='display: inline-block; border: 1px solid black; background: #aa4444; height: 24px; width: 48px;'></span>
+        Unavailable
+      </div>
+      <div class='col-md-4'>
+        <span style='display: inline-block; border: 1px solid black; background: #ffffff; height: 24px; width: 48px;'></span>
+        Available
+      </div>
+    </div>
     <div class='col'>
       <TheCalendar v-if="edit.weekday" :rooms="filtered_hours" />
+      <div v-else class='alert alert-primary mt-4'>Select a weekday to view the schedule</div>
     </div>
   </div>
 </template>
@@ -48,7 +62,7 @@ export default {
   computed: {
     filtered_rooms() {
       return this.rooms.filter(e => 
-        this.edit.building ? e.name.indexOf(this.edit.building) >= 0 : 1 
+        this.edit.building ? e.name.match(/([A-Z]+)/)[1] == this.edit.building : 1 
       )},
     filtered_hours() {
       return this.filtered_rooms.map(e => {
