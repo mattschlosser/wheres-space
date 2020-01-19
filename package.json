@@ -5,10 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "false"
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
     "core-js": "^3.4.4",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -29,7 +32,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console" : "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

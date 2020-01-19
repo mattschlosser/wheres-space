@@ -1,17 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class='navbar navbar-dark bg-dark fixed-top'>
+      <div class='navbar-brand text-white ml-3'>Wheres Space</div>
+    </div>
+    <div class='navbar'>
+      &nbsp; <!-- fake nvabar -->
+    </div>
+    <div class='jumbotron'>
+      <p>Where's Space helps you find a quiet place at your university</p>
+    </div>
+    <TheSchedule></TheSchedule>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TheSchedule from './components/TheSchedule.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    TheSchedule
   }
 }
 </script>
@@ -23,6 +31,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
