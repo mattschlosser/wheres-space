@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class='navbar navbar-dark bg-dark fixed-top'>
-      <div class='navbar-brand text-white ml-3'>Where's Space</div>
+      <div class='navbar-brand text-white ml-3'>Where's Space?</div>
     </div>
     <div class='navbar'>
       <div class='navbar-brand text-white ml-3'>Wheres Space</div>

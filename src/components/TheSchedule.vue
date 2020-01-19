@@ -64,8 +64,8 @@ export default {
       let times = r.split('\n');
       console.log(times.length);
       let x = times.reduce((A,e) => {
-        let days_of_week = e.match(/^([MTWRF])+\s/) || [];
-        let classroom = e.match(/\(([A-Za-z0-9\s]+)\)\s*?$/);
+        let days_of_week = e.match(/^([MTWRFUS])+\s/) || [];
+        let classroom = e.match(/\(([-A-Za-z0-9\s]+)\)\s*?$/);
         let times = e.matchAll(/(\d{2,}:\d{2,}):\d{2}/g);
         let building = classroom[1].match(/^([A-Za-z]+)/)[1];
         classroom = classroom[1];
