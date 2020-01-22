@@ -1,4 +1,4 @@
-<template>
+<template>  
   <table class='table table-striped table-responsive table-sm'>
     <thead><th style='position: sticky;'>Room </th><th v-for="i in Array(27).fill(0).map((e,i) => i+15)" :key="i"> {{ hour(i) }}</th></thead>
     <tr v-for="room in rooms" :key="room.name"><th scope='row' style='height: 10px; white-space:nowrap; position: sticky;'>{{room.name}}</th><td v-for="i in Array(27).fill(0).map((e,i) => i+15)" :key="i" :class="{booked: is_booked(room, i)}" >&nbsp;</td></tr>
@@ -29,18 +29,29 @@ export default {
 }
 </script>
 <style scoped>
+  table {
+    position: relative;
+    max-height: 80vh;
+
+  }
   .booked {
     background: #aa4444;
   }
   td:nth-child(2n) {
     border-left: 1px solid grey;
   }
-  /* thead th {
+  thead th {
     position: sticky;
     top: 0px;
+
+    border-bottom: 9px solid black;
     background-color: white;
     z-index: 3;
-  } */
+  }
+  thead th:first-child {
+    z-index: 4;
+    left: 0;
+  }
   tr th:first-child {
     position: sticky;
     left: 0px;
