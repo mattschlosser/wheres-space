@@ -1,5 +1,5 @@
 <template>
-  <table class='table table-striped table-sm table-responsive'>
+  <table class='table table-striped table-responsive table-sm'>
     <thead><th style='position: sticky;'>Room </th><th v-for="i in Array(27).fill(0).map((e,i) => i+15)" :key="i"> {{ hour(i) }}</th></thead>
     <tr v-for="room in rooms" :key="room.name"><th scope='row' style='height: 10px; white-space:nowrap; position: sticky;'>{{room.name}}</th><td v-for="i in Array(27).fill(0).map((e,i) => i+15)" :key="i" :class="{booked: is_booked(room, i)}" >&nbsp;</td></tr>
   </table>
@@ -10,6 +10,9 @@ export default {
   props: {
     rooms: {
       type: Array
+    },
+    weekday: {
+      type: String
     }
   },
   methods: {
@@ -20,7 +23,7 @@ export default {
     is_booked(room, i) {
       // console.log(room, i);
       // console.log(this.hour((i)));
-      return room.hours.findIndex(e => this.hour(i) >= e.start && this.hour(i) < e.end) != -1;
+      return room[this.weekday].findIndex(e => this.hour(i) >= e.start && this.hour(i) < e.end) != -1;
     }
   }
 }
@@ -31,5 +34,20 @@ export default {
   }
   td:nth-child(2n) {
     border-left: 1px solid grey;
+  }
+  /* thead th {
+    position: sticky;
+    top: 0px;
+    background-color: white;
+    z-index: 3;
+  } */
+  tr th:first-child {
+    position: sticky;
+    left: 0px;
+    background-color: white;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    box-shadow: 1px 0px 3px 0px #666;
+
   }
 </style>
